@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:integrador/pages/home_page.dart';
+import 'package:integrador/pages/create_page.dart';
+import 'package:integrador/pages/home.dart';
+import 'package:integrador/pages/list_page.dart';
+import 'package:integrador/pages/products_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,31 +21,13 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute: '/', // Establece la ruta raíz como '/'
       routes: {
-        '/home': (context) => Home(), // Asocia la ruta raíz con Home()
+        '/': (context) => HomePage(),
+        '/listPage': (context) => ListPage(),
+        '/createPage': (context) => CreatePage(),
+        '/productPage': (context) => ProductListScreen(),
       },
     );
   }
 }
 
-class Casa extends StatelessWidget {
-  const Casa({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Material App Bar'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-          child: Text('Ir a Segunda Pantalla'),
-        ),
-      ),
-      
-    );
-  }
-}
 

@@ -2,33 +2,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<List> getProducts() async {
-  List products = [];
-  QuerySnapshot querySnapshot = await db.collection('products').get();
+Future<List<Map<String, dynamic>>> getPeople() async {
+  List<Map<String, dynamic>> people = [];
+  QuerySnapshot querySnapshot = await db.collection('people').get();
   for (var doc in querySnapshot.docs) {
     final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    final people = {
+    final user = {
       'name': data['name'],
+      'email': data['email'],
       'uid': doc.id,
     };
 
-    products.add(people);
+    people.add(user);
   }
-  return products; 
+  return people; 
 }
+
 
 
 //Guardar data
-Future<void> addAnimals(String name) async{
-  await db.collection("animals").add({"name": name }); 
-}
+Future<void> addPeople(String name, String email, String password) async {
+    await db.collection("people").add({
+      "name": name,
+      "email": email,
+      "password": password,
+    });
+  }
 
 //Actualizar data
-Future<void> updateAnimals(String uid, String newName) async{
-  await db.collection("animals").doc(uid).set({"name": newName});
+Future<void> updatePeople(String uid, String newName, String newEmail, String newPassword, String newPhone) async {
+  await db.collection('people').doc(uid).update({
+    'name': newName,
+    'email': newEmail,
+    'password': newPassword,
+    'phone': newPhone,
+  });
 }
 
 //Borrar data
-Future<void> deleteAnimals(String uid) async{
-  await db.collection("animals").doc(uid).delete();
+Future<void> deletePeople(String uid) async {
+  await db.collection('people').doc(uid).delete();
 }
